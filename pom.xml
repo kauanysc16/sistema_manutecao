@@ -1,0 +1,70 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <!-- Indica a versão do modelo POM que está sendo usado -->
+    <modelVersion>4.0.0</modelVersion>
+
+    <!-- Identificadores do projeto -->
+    <groupId>com.manutencao</groupId> <!-- Grupo ou organização do projeto -->
+    <artifactId>sistema-manutencao</artifactId> <!-- Nome do artefato -->
+    <version>1.0-SNAPSHOT</version> <!-- Versão do projeto (SNAPSHOT indica uma versão em desenvolvimento) -->
+    <packaging>jar</packaging> <!-- Tipo de empacotamento (jar, war, etc.) -->
+
+    <!-- Informações adicionais sobre o projeto -->
+    <name>Sistema de Manutenção Preventiva e Corretiva</name> <!-- Nome legível do projeto -->
+    <description>Um sistema para gerenciar manutenção de máquinas e equipamentos industriais.</description> <!-- Descrição do projeto -->
+
+    <properties>
+        <!-- Definindo propriedades reutilizáveis -->
+        <java.version>17</java.version> <!-- Versão do Java -->
+        <postgresql.version>42.6.0</postgresql.version> <!-- Versão do driver PostgreSQL -->
+        <javafx.version>19.0.2</javafx.version> <!-- Versão do JavaFX -->
+    </properties>
+
+    <dependencies>
+        <!-- Dependências necessárias para o projeto -->
+        <!-- Driver PostgreSQL para conexão com o banco de dados -->
+        <dependency>
+            <groupId>org.postgresql</groupId> <!-- Grupo do driver -->
+            <artifactId>postgresql</artifactId> <!-- Artefato do driver -->
+            <version>${postgresql.version}</version> <!-- Usando a versão definida nas propriedades -->
+        </dependency>
+
+        <!-- Dependências para a interface gráfica JavaFX -->
+        <dependency>
+            <groupId>org.openjfx</groupId> <!-- Grupo do JavaFX -->
+            <artifactId>javafx-controls</artifactId> <!-- Artefato para os controles JavaFX -->
+            <version>${javafx.version}</version> <!-- Usando a versão definida nas propriedades -->
+        </dependency>
+        
+        <dependency>
+            <groupId>org.openjfx</groupId> <!-- Grupo do JavaFX -->
+            <artifactId>javafx-fxml</artifactId> <!-- Artefato para o suporte a FXML em JavaFX -->
+            <version>${javafx.version}</version> <!-- Usando a versão definida nas propriedades -->
+        </dependency>
+        
+        <dependency>
+            <groupId>org.openjfx</groupId> <!-- Grupo do JavaFX -->
+            <artifactId>javafx-base</artifactId> <!-- Artefato básico do JavaFX -->
+            <version>${javafx.version}</version> <!-- Usando a versão definida nas propriedades -->
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- Plugins usados durante o processo de construção do projeto -->
+            <plugin>
+                <groupId>org.openjfx</groupId> <!-- Grupo do plugin JavaFX -->
+                <artifactId>javafx-maven-plugin</artifactId> <!-- Plugin para integração do JavaFX com Maven -->
+                <version>0.0.8</version> <!-- Versão do plugin -->
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>run</goal> <!-- Meta para executar o aplicativo JavaFX -->
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
