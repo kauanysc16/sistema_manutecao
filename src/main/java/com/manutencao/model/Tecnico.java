@@ -1,43 +1,53 @@
-package com.manutencao.model; // Pacote onde a classe Tecnico está localizada
+package com.manutencao.model;
 
 public class Tecnico {
-    private int id; // ID do técnico (geralmente um campo autoincrementado no banco de dados)
+    private int id; // ID do técnico
     private String nome; // Nome do técnico
-    private String especialidade; // Especialidade do técnico (ex: eletricista, mecânico)
+    private String especialidade; // Especialidade do técnico
+    private boolean disponivel; // Disponibilidade do técnico
 
-    // Construtor sem parâmetros (construtor padrão)
+    // Construtor padrão
     public Tecnico() {
     }
 
-    // Construtor que aceita parâmetros para inicializar o técnico
-    public Tecnico(int id, String nome, String especialidade) {
-        this.id = id; // Inicializa o ID do técnico
-        this.nome = nome; // Inicializa o nome do técnico
-        this.especialidade = especialidade; // Inicializa a especialidade do técnico
+    // Construtor com parâmetros
+    public Tecnico(int id, String nome, String especialidade, boolean disponivel) {
+        this.id = id;
+        this.nome = nome;
+        this.especialidade = especialidade;
+        this.disponivel = disponivel;
     }
 
-    // Métodos Getters e Setters
+    // Getters e Setters
     public int getId() {
-        return id; // Retorna o ID do técnico
+        return id;
     }
 
     public void setId(int id) {
-        this.id = id; // Define o ID do técnico
+        this.id = id;
     }
 
     public String getNome() {
-        return nome; // Retorna o nome do técnico
+        return nome;
     }
 
     public void setNome(String nome) {
-        this.nome = nome; // Define o nome do técnico
+        this.nome = nome;
     }
 
     public String getEspecialidade() {
-        return especialidade; // Retorna a especialidade do técnico
+        return especialidade;
     }
 
     public void setEspecialidade(String especialidade) {
-        this.especialidade = especialidade; // Define a especialidade do técnico
+        this.especialidade = especialidade;
+    }
+
+    public boolean isDisponivel() {
+        return disponivel;
+    }
+
+    public void setDisponivel(boolean disponivel) {
+        this.disponivel = disponivel;
     }
 }

@@ -1,40 +1,45 @@
-package com.manutencao.controller; // Pacote onde a classe TecnicoController está localizada
+package com.manutencao.controller;
 
-import java.util.List; // Importa a classe List da biblioteca java.util
+import java.util.List;
 
-import com.manutencao.connection.TecnicoDAO; // Importa a classe TecnicoDAO para operações de banco de dados
-import com.manutencao.model.Tecnico; // Importa a classe Tecnico do modelo
+import com.manutencao.connection.TecnicoDAO;
+// Corrigido para apontar para o pacote correto
+import com.manutencao.model.Tecnico;
 
 public class TecnicoController {
-    private TecnicoDAO tecnicoDAO; // Instância de TecnicoDAO para gerenciar operações de banco de dados
+    private TecnicoDAO tecnicoDAO;
 
-    // Construtor da classe TecnicoController
     public TecnicoController() {
-        tecnicoDAO = new TecnicoDAO(); // Inicializa a TecnicoDAO
+        tecnicoDAO = new TecnicoDAO();
     }
 
-    // Método para salvar um novo técnico
     public void salvarTecnico(Tecnico tecnico) {
-        tecnicoDAO.salvar(tecnico); // Chama o método salvar da TecnicoDAO
+        tecnicoDAO.salvar(tecnico);
     }
 
-    // Método para atualizar um técnico existente
     public void atualizarTecnico(Tecnico tecnico) {
-        tecnicoDAO.atualizar(tecnico); // Chama o método atualizar da TecnicoDAO
+        tecnicoDAO.atualizar(tecnico);
     }
 
-    // Método para deletar um técnico pelo ID
     public void deletarTecnico(int id) {
-        tecnicoDAO.deletar(id); // Chama o método deletar da TecnicoDAO
+        tecnicoDAO.deletar(id);
     }
 
-    // Método para buscar um técnico pelo ID
     public Tecnico buscarTecnicoPorId(int id) {
-        return tecnicoDAO.buscarPorId(id); // Chama o método buscarPorId da TecnicoDAO
+        return tecnicoDAO.buscarPorId(id);
     }
 
-    // Método para listar todos os técnicos
     public List<Tecnico> listarTodosTecnicos() {
-        return tecnicoDAO.listarTodos(); // Chama o método listarTodos da TecnicoDAO
+        return tecnicoDAO.listarTodos();
+    }
+
+    // Método adicional para buscar técnicos por especialidade
+    public List<Tecnico> buscarTecnicosPorEspecialidade(String especialidade) {
+        return tecnicoDAO.buscarPorEspecialidade(especialidade);
+    }
+
+    // Método adicional para verificar disponibilidade dos técnicos
+    public List<Tecnico> verificarDisponibilidade() {
+        return tecnicoDAO.verificarDisponibilidade();
     }
 }

@@ -1,40 +1,39 @@
-package com.manutencao.controller; // Pacote onde a classe EquipamentoController está localizada
+package com.manutencao.controller;
 
-import java.util.List; // Importa a classe List da biblioteca java.util
+import java.util.List;
 
-import com.manutencao.connection.EquipamentoDAO; // Importa a classe EquipamentoDAO para operações de banco de dados
-import com.manutencao.model.Equipamento; // Importa a classe Equipamento do modelo
+import com.manutencao.connection.EquipamentoDAO;
+import com.manutencao.model.Equipamento;
 
 public class EquipamentoController {
-    private EquipamentoDAO equipamentoDAO; // Instância de EquipamentoDAO para gerenciar operações de banco de dados
+    private EquipamentoDAO equipamentoDAO;
 
-    // Construtor da classe EquipamentoController
     public EquipamentoController() {
-        equipamentoDAO = new EquipamentoDAO(); // Inicializa a EquipamentoDAO
+        equipamentoDAO = new EquipamentoDAO();
     }
 
-    // Método para salvar um novo equipamento
     public void salvarEquipamento(Equipamento equipamento) {
-        equipamentoDAO.salvar(equipamento); // Chama o método salvar da EquipamentoDAO
+        equipamentoDAO.salvar(equipamento);
     }
 
-    // Método para atualizar um equipamento existente
     public void atualizarEquipamento(Equipamento equipamento) {
-        equipamentoDAO.atualizar(equipamento); // Chama o método atualizar da EquipamentoDAO
+        equipamentoDAO.atualizar(equipamento);
     }
 
-    // Método para deletar um equipamento pelo ID
     public void deletarEquipamento(int id) {
-        equipamentoDAO.deletar(id); // Chama o método deletar da EquipamentoDAO
+        equipamentoDAO.deletar(id);
     }
 
-    // Método para buscar um equipamento pelo ID
     public Equipamento buscarEquipamentoPorId(int id) {
-        return equipamentoDAO.buscarPorId(id); // Chama o método buscarPorId da EquipamentoDAO
+        return equipamentoDAO.buscarPorId(id);
     }
 
-    // Método para listar todos os equipamentos
     public List<Equipamento> listarTodosEquipamentos() {
-        return equipamentoDAO.listarTodos(); // Chama o método listarTodos da EquipamentoDAO
+        return equipamentoDAO.listarTodos();
+    }
+
+    // Método adicional para buscar equipamento pelo local
+    public List<Equipamento> buscarEquipamentoPorLocal(String local) {
+        return equipamentoDAO.buscarPorLocal(local);
     }
 }

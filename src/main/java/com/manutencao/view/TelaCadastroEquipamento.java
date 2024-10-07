@@ -68,9 +68,14 @@ public class TelaCadastroEquipamento extends JFrame { // Classe que representa a
                         txtAparelho.getText(), // Obtém o texto do campo de aparelho
                         txtModelo.getText(), // Obtém o texto do campo de modelo
                         txtLocal.getText()); // Obtém o texto do campo de local
-                equipamentoController.salvarEquipamento(equipamento); // Salva o equipamento
-                JOptionPane.showMessageDialog(null, "Equipamento salvo com sucesso!"); // Exibe uma mensagem de sucesso
-                dispose(); // Fecha a janela de cadastro
+                
+                // Chama o método de salvar no controlador
+                if (equipamentoController.salvarEquipamento(equipamento)) { 
+                    JOptionPane.showMessageDialog(null, "Equipamento salvo com sucesso!"); // Exibe uma mensagem de sucesso
+                    dispose(); // Fecha a janela de cadastro
+                } else {
+                    JOptionPane.showMessageDialog(null, "Erro ao salvar equipamento!", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
             }
         });
 

@@ -1,58 +1,60 @@
-package com.manutencao.controller; // Pacote onde a classe ManutencaoController está localizada
+package com.manutencao.controller;
 
-import java.util.List; // Importa a classe List da biblioteca java.util
+import java.util.List;
 
-import com.manutencao.connection.ManutencaoDAO; // Importa a classe ManutencaoDAO para operações de banco de dados
-import com.manutencao.model.Manutencao; // Importa a classe Manutencao do modelo
+import com.manutencao.connection.ManutencaoDAO;
+import com.manutencao.model.Manutencao;
 
 public class ManutencaoController {
-    private ManutencaoDAO manutencaoDAO; // Instância de ManutencaoDAO para gerenciar operações de banco de dados
+    private ManutencaoDAO manutencaoDAO;
 
-    // Construtor da classe ManutencaoController
     public ManutencaoController() {
-        manutencaoDAO = new ManutencaoDAO(); // Inicializa a ManutencaoDAO
+        manutencaoDAO = new ManutencaoDAO();
     }
 
-    // Método para salvar uma nova manutenção
     public void salvarManutencao(Manutencao manutencao) {
-        manutencaoDAO.salvar(manutencao); // Chama o método salvar da ManutencaoDAO
+        manutencaoDAO.salvar(manutencao);
     }
 
-    // Método para atualizar uma manutenção existente
     public void atualizarManutencao(Manutencao manutencao) {
-        manutencaoDAO.atualizar(manutencao); // Chama o método atualizar da ManutencaoDAO
+        manutencaoDAO.atualizar(manutencao);
     }
 
-    // Método para excluir uma manutenção pelo ID
     public void excluirManutencao(int id) {
-        manutencaoDAO.deletar(id); // Chama o método deletar da ManutencaoDAO
+        manutencaoDAO.deletar(id);
     }
 
-    // Método para buscar uma manutenção pelo ID
     public Manutencao buscarManutencaoPorId(int id) {
-        return manutencaoDAO.buscarPorId(id); // Chama o método buscarPorId da ManutencaoDAO
+        return manutencaoDAO.buscarPorId(id);
     }
 
-    // Método para listar todas as manutenções
     public List<Manutencao> listarManutencoes() {
-        return manutencaoDAO.listarTodos(); // Chama o método listarTodos da ManutencaoDAO
+        return manutencaoDAO.listarTodos();
     }
 
-    // Método para marcar uma manutenção como concluída
     public void marcarComoConcluida(int id) {
-        Manutencao manutencao = buscarManutencaoPorId(id); // Busca a manutenção pelo ID
-        if (manutencao != null) { // Verifica se a manutenção existe
-            manutencao.setStatus("Concluída"); // Define o status como "Concluída"
-            atualizarManutencao(manutencao); // Atualiza a manutenção no banco de dados
+        Manutencao manutencao = buscarManutencaoPorId(id);
+        if (manutencao != null) {
+            manutencao.setStatus("Concluída");
+            atualizarManutencao(manutencao);
         }
     }
-    
-    // Método para marcar uma manutenção como pendente
+
     public void marcarComoPendente(int id) {
-        Manutencao manutencao = buscarManutencaoPorId(id); // Busca a manutenção pelo ID
-        if (manutencao != null) { // Verifica se a manutenção existe
-            manutencao.setStatus("Pendente"); // Define o status como "Pendente"
-            atualizarManutencao(manutencao); // Atualiza a manutenção no banco de dados
+        Manutencao manutencao = buscarManutencaoPorId(id);
+        if (manutencao != null) {
+            manutencao.setStatus("Pendente");
+            atualizarManutencao(manutencao);
         }
+    }
+
+    public List<Manutencao> buscarManutencoesPorEquipamentoId(int equipamentoId) {
+        return manutencaoDAO.listarPorEquipamento(equipamentoId);
+    }
+
+    public void gerarRelatorioManutencoes() {
+        // Implementação do método gerarRelatorio(), caso não esteja no ManutencaoDAO
+        List<Manutencao> manutencoes = listarManutencoes();
+        // Lógica para gerar o relatório, como exportação para PDF ou exibição em tela
     }
 }

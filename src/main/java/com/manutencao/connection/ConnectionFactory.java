@@ -6,7 +6,8 @@ import java.sql.SQLException; // Importa a classe SQLException da biblioteca jav
 
 public class ConnectionFactory {
     // URL de conexão com o banco de dados PostgreSQL
-    private final String URL = "jdbc:postgresql://localhost:5432/sistema_manutencao"; // Define o endereço do banco de dados
+    private final String URL = "jdbc:postgresql://localhost:5432/sistema_manutencao"; // Define o endereço do banco de
+                                                                                      // dados
     private final String USER = "postgres"; // Define o usuário do banco de dados
     private final String PASSWORD = "postgres"; // Define a senha do usuário
 
@@ -25,7 +26,7 @@ public class ConnectionFactory {
     public Connection getConnection() {
         try {
             // Retorna uma nova conexão usando a URL, usuário e senha
-            return DriverManager.getConnection(URL, USER, PASSWORD); 
+            return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
             // Caso ocorra um erro ao tentar obter a conexão, imprime a stack trace do erro
             e.printStackTrace();

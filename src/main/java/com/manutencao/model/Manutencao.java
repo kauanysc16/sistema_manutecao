@@ -1,22 +1,16 @@
 package com.manutencao.model;
 
-public class Manutencao {
-    private int id;
-    private int idTecnico;
-    private int idEquipamento;
-    private String data;
-    private String descricao;
-    private String status;
+import java.time.LocalDate;
 
-    // Construtor com todos os parâmetros
-    public Manutencao(int id, int idTecnico, int idEquipamento, String data, String descricao, String status) {
-        this.id = id;
-        this.idTecnico = idTecnico;
-        this.idEquipamento = idEquipamento;
-        this.data = data;
-        this.descricao = descricao;
-        this.status = status;
-    }
+public class Manutencao {
+    private int id; // Identificador da manutenção
+    private int equipamentoId; // ID do equipamento relacionado
+    private String tipo; // Tipo de manutenção (ex: Corretiva, Preventiva)
+    private String descricao; // Descrição da manutenção
+    private LocalDate dataManutencao; // Data da manutenção
+    private String status; // Status da manutenção (ex: Concluída, Pendente)
+    private String pecasSubstituidas; // Peças que foram substituídas
+    private int tempoInatividade; // Tempo de inatividade em horas
 
     // Getters e Setters
     public int getId() {
@@ -27,28 +21,20 @@ public class Manutencao {
         this.id = id;
     }
 
-    public int getIdTecnico() {
-        return idTecnico;
+    public int getEquipamentoId() {
+        return equipamentoId;
     }
 
-    public void setIdTecnico(int idTecnico) {
-        this.idTecnico = idTecnico;
+    public void setEquipamentoId(int equipamentoId) {
+        this.equipamentoId = equipamentoId;
     }
 
-    public int getIdEquipamento() {
-        return idEquipamento;
+    public String getTipo() {
+        return tipo;
     }
 
-    public void setIdEquipamento(int idEquipamento) {
-        this.idEquipamento = idEquipamento;
-    }
-
-    public String getData() {
-        return data;
-    }
-
-    public void setData(String data) {
-        this.data = data;
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     public String getDescricao() {
@@ -59,11 +45,35 @@ public class Manutencao {
         this.descricao = descricao;
     }
 
+    public LocalDate getDataManutencao() {
+        return dataManutencao;
+    }
+
+    public void setDataManutencao(LocalDate dataManutencao) {
+        this.dataManutencao = dataManutencao;
+    }
+
     public String getStatus() {
         return status;
     }
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getPecasSubstituidas() {
+        return pecasSubstituidas;
+    }
+
+    public void setPecasSubstituidas(String pecasSubstituidas) {
+        this.pecasSubstituidas = pecasSubstituidas;
+    }
+
+    public int getTempoInatividade() {
+        return tempoInatividade;
+    }
+
+    public void setTempoInatividade(int tempoInatividade) {
+        this.tempoInatividade = tempoInatividade;
     }
 }

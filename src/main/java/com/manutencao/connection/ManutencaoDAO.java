@@ -1,125 +1,176 @@
-package com.manutencao.connection; // Pacote onde a classe ManutencaoDAO está localizada
+package com.manutencao.connection;
 
-import com.manutencao.model.Manutencao; // Importa a classe Manutencao do modelo
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.sql.*; // Importa todas as classes da biblioteca java.sql
-import java.util.ArrayList; // Importa a classe ArrayList da biblioteca java.util
-import java.util.List; // Importa a classe List da biblioteca java.util
+import com.manutencao.model.Manutencao;
 
 public class ManutencaoDAO {
-    private ConnectionFactory connectionFactory; // Instância de ConnectionFactory para gerenciar conexões com o banco de dados
 
-    // Consultas SQL como constantes
-    private static final String SQL_INSERT = "INSERT INTO manutencao (id_tecnico, id_equipamento, data, descricao, status) VALUES (?, ?, ?, ?, ?)";
-    private static final String SQL_UPDATE = "UPDATE manutencao SET id_tecnico = ?, id_equipamento = ?, data = ?, descricao = ?, status = ? WHERE id = ?";
-    private static final String SQL_DELETE = "DELETE FROM manutencao WHERE id = ?";
-    private static final String SQL_SELECT_BY_ID = "SELECT * FROM manutencao WHERE id = ?";
-    private static final String SQL_SELECT_ALL = "SELECT * FROM manutencao";
-    private static final String SQL_UPDATE_STATUS = "UPDATE manutencao SET status = ? WHERE id = ?";
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Defina seu formato desejado
 
-    // Construtor da classe ManutencaoDAO
-    public ManutencaoDAO() {
-        connectionFactory = new ConnectionFactory(); // Inicializa a ConnectionFactory
-    }
-
-    // Método para salvar uma nova manutenção no banco de dados
     public void salvar(Manutencao manutencao) {
-        try (Connection conn = connectionFactory.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(SQL_INSERT)) {
-            pstmt.setInt(1, manutencao.getIdTecnico());
-            pstmt.setInt(2, manutencao.getIdEquipamento());
-            pstmt.setTimestamp(3, Timestamp.valueOf(manutencao.getData()));
-            pstmt.setString(4, manutencao.getDescricao());
-            pstmt.setString(5, manutencao.getStatus());
-            pstmt.executeUpdate();
+        String sql = "INSERT INTO manutencao (equipamentoId, tipo, descricao, dataManutencao, status, pecasSubstituidas, tempoInatividade) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        try (Connection conn = new ConnectionFactory().getConnection(); 
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             
+            stmt.setInt(1, manutencao.getEquipamentoId());
+            stmt.setString(2, manutencao.getTipo());
+            stmt.setString(3, manutencao.getDescricao());
+            stmt.setString(4, manutencao.getDataManutencao().format(formatter)); // Conversão de LocalDate para String
+            stmt.setString(5, manutencao.getStatus());
+            stmt.setString(6, manutencao.getPecasSubstituidas());
+            stmt.setInt(7, manutencao.getTempoInatividade());
+            stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace(); // Considere lançar uma exceção personalizada ou registrar o erro
+            e.printStackTrace();
         }
     }
 
-    // Método para atualizar uma manutenção existente no banco de dados
     public void atualizar(Manutencao manutencao) {
-        try (Connection conn = connectionFactory.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(SQL_UPDATE)) {
-            pstmt.setInt(1, manutencao.getIdTecnico());
-            pstmt.setInt(2, manutencao.getIdEquipamento());
-            pstmt.setTimestamp(3, Timestamp.valueOf(manutencao.getData()));
-            pstmt.setString(4, manutencao.getDescricao());
-            pstmt.setString(5, manutencao.getStatus());
-            pstmt.setInt(6, manutencao.getId());
-            pstmt.executeUpdate();
+        String sql = "UPDATE manutencao SET equipamentoId = ?, tipo = ?, descricao = ?, dataManutencao = ?, status = ?, pecasSubstituidas = ?, tempoInatividade = ? WHERE id = ?";
+        try (Connection conn = new ConnectionFactory().getConnection(); 
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             
+            stmt.setInt(1, manutencao.getEquipamentoId());
+            stmt.setString(2, manutencao.getTipo());
+            stmt.setString(3, manutencao.getDescricao());
+            stmt.setString(4, manutencao.getDataManutencao().format(formatter)); // Conversão de LocalDate para String
+            stmt.setString(5, manutencao.getStatus());
+            stmt.setString(6, manutencao.getPecasSubstituidas());
+            stmt.setInt(7, manutencao.getTempoInatividade());
+            stmt.setInt(8, manutencao.getId());
+            stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace(); // Considere lançar uma exceção personalizada ou registrar o erro
+            e.printStackTrace();
         }
     }
 
-    // Método para deletar uma manutenção do banco de dados pelo ID
     public void deletar(int id) {
-        try (Connection conn = connectionFactory.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(SQL_DELETE)) {
-            pstmt.setInt(1, id);
-            pstmt.executeUpdate();
+        String sql = "DELETE FROM manutencao WHERE id = ?";
+        try (Connection conn = new ConnectionFactory().getConnection(); 
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
         } catch (SQLException e) {
-            e.printStackTrace(); // Considere lançar uma exceção personalizada ou registrar o erro
+            e.printStackTrace();
         }
     }
 
-    // Método para buscar uma manutenção pelo ID
     public Manutencao buscarPorId(int id) {
-        Manutencao manutencao = null;
-        try (Connection conn = connectionFactory.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(SQL_SELECT_BY_ID)) {
-            pstmt.setInt(1, id);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    manutencao = new Manutencao(
-                            rs.getInt("id"),
-                            rs.getInt("id_tecnico"),
-                            rs.getInt("id_equipamento"),
-                            rs.getTimestamp("data").toLocalDateTime(),
-                            rs.getString("descricao"),
-                            rs.getString("status")
-                    );
-                }
+        String sql = "SELECT * FROM manutencao WHERE id = ?";
+        try (Connection conn = new ConnectionFactory().getConnection(); 
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return mapResultSetToManutencao(rs);
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Considere lançar uma exceção personalizada ou registrar o erro
+            e.printStackTrace();
         }
-        return manutencao;
+        return null;
     }
 
-    // Método para listar todas as manutenções do banco de dados
     public List<Manutencao> listarTodos() {
+        String sql = "SELECT * FROM manutencao";
         List<Manutencao> manutencoes = new ArrayList<>();
-        try (Connection conn = connectionFactory.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(SQL_SELECT_ALL);
-             ResultSet rs = pstmt.executeQuery()) {
+        try (Connection conn = new ConnectionFactory().getConnection(); 
+             PreparedStatement stmt = conn.prepareStatement(sql); 
+             ResultSet rs = stmt.executeQuery()) {
+             
             while (rs.next()) {
-                Manutencao manutencao = new Manutencao(
-                        rs.getInt("id"),
-                        rs.getInt("id_tecnico"),
-                        rs.getInt("id_equipamento"),
-                        rs.getTimestamp("data").toLocalDateTime(),
-                        rs.getString("descricao"),
-                        rs.getString("status")
-                );
-                manutencoes.add(manutencao);
+                manutencoes.add(mapResultSetToManutencao(rs));
             }
         } catch (SQLException e) {
-            e.printStackTrace(); // Considere lançar uma exceção personalizada ou registrar o erro
+            e.printStackTrace();
         }
         return manutencoes;
     }
 
-    // Método para atualizar o status de uma manutenção
-    public void atualizarStatus(int id, String status) {
-        try (Connection conn = connectionFactory.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(SQL_UPDATE_STATUS)) {
-            pstmt.setString(1, status);
-            pstmt.setInt(2, id);
-            pstmt.executeUpdate();
+    public List<Manutencao> listarPorEquipamento(int equipamentoId) {
+        String sql = "SELECT * FROM manutencao WHERE equipamentoId = ?";
+        List<Manutencao> manutencoes = new ArrayList<>();
+        try (Connection conn = new ConnectionFactory().getConnection(); 
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             
+            stmt.setInt(1, equipamentoId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                manutencoes.add(mapResultSetToManutencao(rs));
+            }
         } catch (SQLException e) {
-            e.printStackTrace(); // Considere lançar uma exceção personalizada ou registrar o erro
+            e.printStackTrace();
         }
+        return manutencoes;
+    }
+
+    public List<Manutencao> listarPorStatus(String status) {
+        String sql = "SELECT * FROM manutencao WHERE status = ?";
+        List<Manutencao> manutencoes = new ArrayList<>();
+        try (Connection conn = new ConnectionFactory().getConnection(); 
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             
+            stmt.setString(1, status);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                manutencoes.add(mapResultSetToManutencao(rs));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return manutencoes;
+    }
+
+    public double calcularMTTR() {
+        String sql = "SELECT AVG(tempoInatividade) AS mttr FROM manutencao WHERE tipo = 'Corretiva'";
+        try (Connection conn = new ConnectionFactory().getConnection(); 
+             PreparedStatement stmt = conn.prepareStatement(sql); 
+             ResultSet rs = stmt.executeQuery()) {
+             
+            if (rs.next()) {
+                return rs.getDouble("mttr");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public double calcularMTBF() {
+        String sql = "SELECT (SUM(tempoAtivo) / COUNT(*)) AS mtbf FROM equipamento";
+        try (Connection conn = new ConnectionFactory().getConnection(); 
+             PreparedStatement stmt = conn.prepareStatement(sql); 
+             ResultSet rs = stmt.executeQuery()) {
+             
+            if (rs.next()) {
+                return rs.getDouble("mtbf");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    private Manutencao mapResultSetToManutencao(ResultSet rs) throws SQLException {
+        Manutencao manutencao = new Manutencao();
+        manutencao.setId(rs.getInt("id"));
+        manutencao.setEquipamentoId(rs.getInt("equipamentoId"));
+        manutencao.setTipo(rs.getString("tipo"));
+        manutencao.setDescricao(rs.getString("descricao"));
+        // Converter a data do formato String para LocalDate
+        manutencao.setDataManutencao(LocalDate.parse(rs.getString("dataManutencao"), formatter)); 
+        manutencao.setStatus(rs.getString("status"));
+        manutencao.setPecasSubstituidas(rs.getString("pecasSubstituidas"));
+        manutencao.setTempoInatividade(rs.getInt("tempoInatividade"));
+        return manutencao;
     }
 }
