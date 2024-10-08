@@ -89,9 +89,12 @@ classDiagram
     Tecnico "1" -- "0..*" Manutencao : realiza >
     Equipamento "1" -- "0..*" Manutencao : passa por >
 
+
+```mermaid
+
 flowchart TD
     A[Início] --> B{Tipo de Ação}
-
+    
     B -->|Usuário| C[Cadastrar Técnico]
     B -->|Usuário| D[Cadastrar Equipamento]
     B -->|Usuário| E[Agendar Manutenção]
@@ -118,7 +121,9 @@ flowchart TD
     L --> O
     M --> O
     N --> O
+Diagrama de Fluxo
 
+```mermaid
 flowchart TD
     A[Início] --> B{Cadastro de Técnico?}
     B -- Sim --> C[Preencher dados do Técnico]
