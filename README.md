@@ -92,61 +92,45 @@ Equipamento "1" *-- "0..*" Manutencao
 
 #### Diagrama de Uso
 
-@startuml
-actor Usuario
-actor Administrador
+%%{ init : { "theme" : "default" } }%%
+graph TD;
+    Usuario --> Cadastrar_Tecnico
+    Usuario --> Cadastrar_Equipamento
+    Usuario --> Agendar_Manutencao
+    Usuario --> Registrar_Falha
+    Usuario --> Gerar_Relatorio
+    Usuario --> Verificar_Disponibilidade
 
-Usuario --> (Cadastrar Tecnico)
-Usuario --> (Cadastrar Equipamento)
-Usuario --> (Agendar Manutencao)
-Usuario --> (Registrar Falha)
-Usuario --> (Gerar Relatorio)
-Usuario --> (Verificar Disponibilidade)
+    Administrador --> Cadastrar_Tecnico
+    Administrador --> Cadastrar_Equipamento
+    Administrador --> Agendar_Manutencao
+    Administrador --> Registrar_Falha
+    Administrador --> Gerar_Relatorio
+    Administrador --> Verificar_Disponibilidade
 
-Administrador --> (Cadastrar Tecnico)
-Administrador --> (Cadastrar Equipamento)
-Administrador --> (Agendar Manutencao)
-Administrador --> (Registrar Falha)
-Administrador --> (Gerar Relatorio)
-Administrador --> (Verificar Disponibilidade)
-@enduml
 
 
 #### Diagrama de Fluxos
 
-@startuml
-start
-:Inicio;
-if (Cadastro de Tecnico?) then (sim)
-  :Preencher dados do Tecnico;
-  :Salvar Tecnico;
-else (não)
-  if (Cadastro de Equipamento?) then (sim)
-    :Preencher dados do Equipamento;
-    :Salvar Equipamento;
-  else (não)
-    if (Agendamento de Manutencao?) then (sim)
-      :Selecionar Equipamento e Tecnico;
-      :Preencher dados da Manutencao;
-      :Salvar Manutencao;
-    else (não)
-      if (Registro de Falha?) then (sim)
-        :Selecionar Manutencao;
-        :Preencher dados da Falha;
-        :Salvar Falha;
-      else (não)
-        if (Geracao de Relatorio?) then (sim)
-          :Selecionar tipo de Relatorio;
-          :Gerar Relatorio;
-        else (não)
-          if (Verificacao de Disponibilidade?) then (sim)
-            :Verificar disponibilidade dos Tecnicos;
-          endif
-        endif
-      endif
-    endif
-  endif
-endif
-:Encerrar;
-stop
-@enduml
+%%{ init : { "theme" : "default" } }%%
+graph TD;
+    A[Inicio] --> B{Cadastro de Tecnico?}
+    B -- Sim --> C[Preencher dados do Tecnico]
+    C --> D[Salvar Tecnico]
+    B -- Não --> E{Cadastro de Equipamento?}
+    E -- Sim --> F[Preencher dados do Equipamento]
+    F --> G[Salvar Equipamento]
+    E -- Não --> H{Agendamento de Manutencao?}
+    H -- Sim --> I[Selecionar Equipamento e Tecnico]
+    I --> J[Preencher dados da Manutencao]
+    J --> K[Salvar Manutencao]
+    H -- Não --> L{Registro de Falha?}
+    L -- Sim --> M[Selecionar Manutencao]
+    M --> N[Preencher dados da Falha]
+    N --> O[Salvar Falha]
+    L -- Não --> P{Geracao de Relatorio?}
+    P -- Sim --> Q[Selecionar tipo de Relatorio]
+    Q --> R[Gerar Relatorio]
+    P -- Não --> S{Verificacao de Disponibilidade?}
+    S -- Sim --> T[Verificar disponibilidade dos Tecnicos]
+    A --> U[Encerrar]
