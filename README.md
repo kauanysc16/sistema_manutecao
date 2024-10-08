@@ -25,7 +25,6 @@ Este projeto é um sistema de gerenciamento de manutenção preventiva e correti
 ### Diagrama de Classes
 
 ```mermaid
-classDiagram
     class Tecnico {
         +int id
         +string nome
@@ -90,7 +89,6 @@ classDiagram
     Equipamento "1" -- "0..*" Manutencao : passa por >
 
 
-```mermaid
 
 flowchart TD
     A[Início] --> B{Tipo de Ação}
