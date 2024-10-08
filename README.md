@@ -24,6 +24,8 @@ Este projeto é um sistema de gerenciamento de manutenção preventiva e correti
 
 ### Diagrama de Classes
 
+1. Classe
+
 ```mermaid
     class Tecnico {
         +int id
@@ -87,9 +89,10 @@ Este projeto é um sistema de gerenciamento de manutenção preventiva e correti
 
     Tecnico "1" -- "0..*" Manutencao : realiza >
     Equipamento "1" -- "0..*" Manutencao : passa por >
+```
 
-
-
+  2. Uso
+```mermaid
 flowchart TD
     A[Início] --> B{Tipo de Ação}
     
@@ -119,8 +122,11 @@ flowchart TD
     L --> O
     M --> O
     N --> O
-Diagrama de Fluxo
 
+
+```
+
+ 3. Fluxo
 ```mermaid
 flowchart TD
     A[Início] --> B{Cadastro de Técnico?}
@@ -143,3 +149,6 @@ flowchart TD
     P -- Não --> S{Verificação de Disponibilidade?}
     S -- Sim --> T[Verificar disponibilidade dos Técnicos]
     A --> U[Encerrar]
+
+
+```
