@@ -27,6 +27,7 @@ Este projeto é um sistema de gerenciamento de manutenção preventiva e correti
 1. Classe
 
 ```mermaid
+classDiagram
     class Tecnico {
         +int id
         +string nome
