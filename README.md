@@ -22,9 +22,10 @@ Este projeto é um sistema de gerenciamento de manutenção preventiva e correti
 
 ## Diagramas
 
-#### Diagrama de Classes
+### Diagrama de Classes
 
-flowchart TD
+```mermaid
+classDiagram
     class Tecnico {
         +int id
         +string nome
@@ -88,8 +89,6 @@ flowchart TD
     Tecnico "1" -- "0..*" Manutencao : realiza >
     Equipamento "1" -- "0..*" Manutencao : passa por >
 
-### Diagrama de Uso
-
 flowchart TD
     A[Início] --> B{Tipo de Ação}
 
@@ -120,8 +119,6 @@ flowchart TD
     M --> O
     N --> O
 
-### Diagrama de Fluxo
-
 flowchart TD
     A[Início] --> B{Cadastro de Técnico?}
     B -- Sim --> C[Preencher dados do Técnico]
@@ -143,4 +140,3 @@ flowchart TD
     P -- Não --> S{Verificação de Disponibilidade?}
     S -- Sim --> T[Verificar disponibilidade dos Técnicos]
     A --> U[Encerrar]
-
