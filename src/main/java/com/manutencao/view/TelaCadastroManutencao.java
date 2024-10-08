@@ -29,6 +29,7 @@ public class TelaCadastroManutencao extends JFrame {
     private JButton btnCancelar; // Botão para cancelar a operação
     private ManutencaoController manutencaoController; // Controlador de manutenções
 
+    // Construtor da tela de cadastro de manutenção
     public TelaCadastroManutencao() {
         manutencaoController = new ManutencaoController(); // Instancia o controlador
 
@@ -129,8 +130,7 @@ public class TelaCadastroManutencao extends JFrame {
                             DateTimeFormatter.ofPattern("yyyy-MM-dd")); // Valida a data
                     String descricao = txtDescricao.getText(); // Obtém a descrição
                     String pecasSubstituidas = txtPecasSubstituidas.getText(); // Obtém as peças substituídas
-                    int tempoInatividade = Integer.parseInt(txtTempoInatividade.getText()); // Obtém o tempo de
-                                                                                            // inatividade
+                    int tempoInatividade = Integer.parseInt(txtTempoInatividade.getText()); // Obtém o tempo de inatividade
                     String status = "Pendente"; // Define o status inicial
 
                     // Cria um novo objeto Manutencao
@@ -138,14 +138,10 @@ public class TelaCadastroManutencao extends JFrame {
                             status, pecasSubstituidas, tempoInatividade);
                     manutencaoController.salvarManutencao(manutencao); // Salva a manutenção
                     JOptionPane.showMessageDialog(null, "Manutenção cadastrada com sucesso!"); // Mensagem de sucesso
-                    dispose(); // Fecha a janela
-                } catch (NumberFormatException ex) {
-                    JOptionPane.showMessageDialog(null,
-                            "ID Equipamento, ID Técnico e Tempo de Inatividade devem ser números inteiros.", "Erro",
-                            JOptionPane.ERROR_MESSAGE); // Mensagem de erro para formato de número
-                } catch (DateTimeParseException ex) {
-                    JOptionPane.showMessageDialog(null, "Data inválida. Formato deve ser yyyy-MM-dd.", "Erro",
-                            JOptionPane.ERROR_MESSAGE); // Mensagem de erro para formato de data
+                    limparCampos(); // Limpa os campos após salvar
+                } catch (NumberFormatException | DateTimeParseException ex) {
+                    JOptionPane.showMessageDialog(null, "Erro ao inserir os dados. Verifique os campos e tente novamente.", "Erro",
+                            JOptionPane.ERROR_MESSAGE); // Mensagem de erro
                 }
             }
         });
@@ -154,15 +150,28 @@ public class TelaCadastroManutencao extends JFrame {
         btnCancelar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                dispose(); // Fecha a janela
+                limparCampos(); // Limpa os campos ao cancelar
             }
         });
     }
 
+    // Método para limpar os campos da tela
+    private void limparCampos() {
+        txtIdEquipamento.setText(""); // Limpa o campo do ID do equipamento
+        txtIdTecnico.setText(""); // Limpa o campo do ID do técnico
+        txtTipo.setText(""); // Limpa o campo do tipo
+        txtData.setText(""); // Limpa o campo da data
+        txtDescricao.setText(""); // Limpa a área de descrição
+        txtPecasSubstituidas.setText(""); // Limpa o campo das peças substituídas
+        txtTempoInatividade.setText(""); // Limpa o campo do tempo de inatividade
+    }
+
+    // Método principal para executar a aplicação
     public static void main(String[] args) {
         SwingUtilities.invokeLater(new Runnable() {
+            @Override
             public void run() {
-                new TelaCadastroManutencao().setVisible(true); // Exibe a janela
+                new TelaCadastroManutencao().setVisible(true); // Torna a tela visível
             }
         });
     }

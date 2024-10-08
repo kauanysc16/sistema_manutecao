@@ -12,50 +12,50 @@ public class Tecnico {
 
     // Construtor com parâmetros
     public Tecnico(int id, String nome, String especialidade, boolean disponivel) {
-        this.id = id;
-        this.nome = nome;
-        this.especialidade = especialidade;
-        this.disponivel = disponivel;
+        this.id = id; // Inicializa o ID do técnico
+        this.nome = nome; // Inicializa o nome do técnico
+        this.especialidade = especialidade; // Inicializa a especialidade do técnico
+        this.disponivel = disponivel; // Inicializa a disponibilidade do técnico
     }
 
     // Novo construtor que aceita apenas id, nome e especialidade
     public Tecnico(int id, String nome, String especialidade) {
-        this.id = id;
-        this.nome = nome;
-        this.especialidade = especialidade;
-        this.disponivel = true; // Valor padrão
+        this.id = id; // Inicializa o ID do técnico
+        this.nome = nome; // Inicializa o nome do técnico
+        this.especialidade = especialidade; // Inicializa a especialidade do técnico
+        this.disponivel = true; // Define disponibilidade como verdadeira por padrão
     }
 
     // Getters e Setters
     public int getId() {
-        return id;
+        return id; // Retorna o ID do técnico
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.id = id; // Define o ID do técnico
     }
 
     public String getNome() {
-        return nome;
+        return nome; // Retorna o nome do técnico
     }
 
     public void setNome(String nome) {
-        this.nome = nome;
+        this.nome = nome; // Define o nome do técnico
     }
 
     public String getEspecialidade() {
-        return especialidade;
+        return especialidade; // Retorna a especialidade do técnico
     }
 
     public void setEspecialidade(String especialidade) {
-        this.especialidade = especialidade;
+        this.especialidade = especialidade; // Define a especialidade do técnico
     }
 
     public boolean isDisponivel() {
-        return disponivel;
+        return disponivel; // Retorna a disponibilidade do técnico
     }
 
     public void setDisponivel(boolean disponivel) {
-        this.disponivel = disponivel;
+        this.disponivel = disponivel; // Define a disponibilidade do técnico
     }
 }

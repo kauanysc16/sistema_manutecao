@@ -15,12 +15,13 @@ public class TelaCadastroTecnico extends JFrame { // Classe que representa a tel
     private JButton btnCancelar; // Botão para cancelar a operação
     private TecnicoController tecnicoController; // Controlador de técnicos
 
-    public TelaCadastroTecnico() { // Construtor da classe
+    // Construtor da classe
+    public TelaCadastroTecnico() {
         tecnicoController = new TecnicoController(); // Instancia o controlador
 
         // Configurações da janela
         setTitle("Cadastro de Técnico"); // Define o título da janela
-        setSize(300, 250); // Aumenta o tamanho da janela para acomodar o novo campo
+        setSize(300, 250); // Define o tamanho da janela
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Define a operação padrão de fechamento
         setLocationRelativeTo(null); // Centraliza a janela na tela
         setLayout(null); // Define o layout como nulo (posicionamento manual)
@@ -62,7 +63,7 @@ public class TelaCadastroTecnico extends JFrame { // Classe que representa a tel
             @Override
             public void actionPerformed(ActionEvent e) { // Método que é chamado quando o botão é pressionado
                 // Criação de um novo técnico com os dados inseridos
-                Tecnico tecnico = new Tecnico(0, txtNome.getText(), txtEspecialidade.getText());
+                Tecnico tecnico = new Tecnico(0, txtNome.getText(), txtEspecialidade.getText()); // Cria o objeto técnico
                 tecnico.setDisponivel(chkDisponibilidade.isSelected()); // Define a disponibilidade do técnico
                 tecnicoController.salvarTecnico(tecnico); // Salva o técnico usando o controlador
                 JOptionPane.showMessageDialog(null, "Técnico salvo com sucesso!"); // Exibe uma mensagem de sucesso
@@ -79,7 +80,8 @@ public class TelaCadastroTecnico extends JFrame { // Classe que representa a tel
         });
     }
 
-    public static void main(String[] args) { // Método principal para executar a aplicação
+    // Método principal para executar a aplicação
+    public static void main(String[] args) {
         new TelaCadastroTecnico().setVisible(true); // Cria uma nova instância da tela e a torna visível
     }
 }
