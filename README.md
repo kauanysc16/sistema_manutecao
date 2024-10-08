@@ -24,113 +24,123 @@ Este projeto é um sistema de gerenciamento de manutenção preventiva e correti
 
 #### Diagrama de Classes
 
-@startuml
-class Tecnico {
-  -int id
-  -String nome
-  -String especialidade
-  -boolean disponivel
-  +getId()
-  +setId(int)
-  +getNome()
-  +setNome(String)
-  +getEspecialidade()
-  +setEspecialidade(String)
-  +isDisponivel()
-  +setDisponivel(boolean)
-}
+classDiagram
+    class Tecnico {
+        +int id
+        +string nome
+        +string especialidade
+        +boolean disponivel
+        +getId()
+        +setId(int)
+        +getNome()
+        +setNome(string)
+        +getEspecialidade()
+        +setEspecialidade(string)
+        +isDisponivel()
+        +setDisponivel(boolean)
+    }
 
-class Equipamento {
-  -int id
-  -String aparelho
-  -String modelo
-  -String local
-  +getId()
-  +setId(int)
-  +getAparelho()
-  +setAparelho(String)
-  +getModelo()
-  +setModelo(String)
-  +getLocal()
-  +setLocal(String)
-}
+    class Equipamento {
+        +int id
+        +string aparelho
+        +string modelo
+        +string local
+        +getId()
+        +setId(int)
+        +getAparelho()
+        +setAparelho(string)
+        +getModelo()
+        +setModelo(string)
+        +getLocal()
+        +setLocal(string)
+    }
 
-class Manutencao {
-  -int id
-  -int idEquipamento
-  -int idTecnico
-  -String tipo
-  -String descricao
-  -LocalDate data
-  -String status
-  -String pecasSubstituidas
-  -int tempoInatividade
-  +getId()
-  +setId(int)
-  +getIdEquipamento()
-  +setIdEquipamento(int)
-  +getIdTecnico()
-  +setIdTecnico(int)
-  +getTipo()
-  +setTipo(String)
-  +getDescricao()
-  +setDescricao(String)
-  +getData()
-  +setData(LocalDate)
-  +getStatus()
-  +setStatus(String)
-  +getPecasSubstituidas()
-  +setPecasSubstituidas(String)
-  +getTempoInatividade()
-  +setTempoInatividade(int)
-}
+    class Manutencao {
+        +int id
+        +int idEquipamento
+        +int idTecnico
+        +string tipo
+        +string descricao
+        +LocalDate data
+        +string status
+        +string pecasSubstituidas
+        +int tempoInatividade
+        +getId()
+        +setId(int)
+        +getIdEquipamento()
+        +setIdEquipamento(int)
+        +getIdTecnico()
+        +setIdTecnico(int)
+        +getTipo()
+        +setTipo(string)
+        +getDescricao()
+        +setDescricao(string)
+        +getData()
+        +setData(LocalDate)
+        +getStatus()
+        +setStatus(string)
+        +getPecasSubstituidas()
+        +setPecasSubstituidas(string)
+        +getTempoInatividade()
+        +setTempoInatividade(int)
+    }
 
-Tecnico "1" *-- "0..*" Manutencao
-Equipamento "1" *-- "0..*" Manutencao
-@enduml
+    Tecnico "1" -- "0..*" Manutencao : realiza >
+    Equipamento "1" -- "0..*" Manutencao : passa por >
 
+### Diagrama de Uso
 
-#### Diagrama de Uso
+flowchart TD
+    A[Início] --> B{Tipo de Ação}
 
-%%{ init : { "theme" : "default" } }%%
-graph TD;
-    Usuario --> Cadastrar_Tecnico
-    Usuario --> Cadastrar_Equipamento
-    Usuario --> Agendar_Manutencao
-    Usuario --> Registrar_Falha
-    Usuario --> Gerar_Relatorio
-    Usuario --> Verificar_Disponibilidade
+    B -->|Usuário| C[Cadastrar Técnico]
+    B -->|Usuário| D[Cadastrar Equipamento]
+    B -->|Usuário| E[Agendar Manutenção]
+    B -->|Usuário| F[Registrar Falha]
+    B -->|Usuário| G[Gerar Relatório]
+    B -->|Usuário| H[Verificar Disponibilidade]
 
-    Administrador --> Cadastrar_Tecnico
-    Administrador --> Cadastrar_Equipamento
-    Administrador --> Agendar_Manutencao
-    Administrador --> Registrar_Falha
-    Administrador --> Gerar_Relatorio
-    Administrador --> Verificar_Disponibilidade
+    B -->|Administrador| I[Cadastrar Técnico]
+    B -->|Administrador| J[Cadastrar Equipamento]
+    B -->|Administrador| K[Agendar Manutenção]
+    B -->|Administrador| L[Registrar Falha]
+    B -->|Administrador| M[Gerar Relatório]
+    B -->|Administrador| N[Verificar Disponibilidade]
 
+    C --> O[Fim]
+    D --> O
+    E --> O
+    F --> O
+    G --> O
+    H --> O
+    I --> O
+    J --> O
+    K --> O
+    L --> O
+    M --> O
+    N --> O
 
+### Diagrama de Fluxo
 
-#### Diagrama de Fluxos
-
-%%{ init : { "theme" : "default" } }%%
-graph TD;
-    A[Inicio] --> B{Cadastro de Tecnico?}
-    B -- Sim --> C[Preencher dados do Tecnico]
-    C --> D[Salvar Tecnico]
+flowchart TD
+    A[Início] --> B{Cadastro de Técnico?}
+    B -- Sim --> C[Preencher dados do Técnico]
+    C --> D[Salvar Técnico]
     B -- Não --> E{Cadastro de Equipamento?}
     E -- Sim --> F[Preencher dados do Equipamento]
     F --> G[Salvar Equipamento]
-    E -- Não --> H{Agendamento de Manutencao?}
-    H -- Sim --> I[Selecionar Equipamento e Tecnico]
-    I --> J[Preencher dados da Manutencao]
-    J --> K[Salvar Manutencao]
+    E -- Não --> H{Agendamento de Manutenção?}
+    H -- Sim --> I[Selecionar Equipamento e Técnico]
+    I --> J[Preencher dados da Manutenção]
+    J --> K[Salvar Manutenção]
     H -- Não --> L{Registro de Falha?}
-    L -- Sim --> M[Selecionar Manutencao]
+    L -- Sim --> M[Selecionar Manutenção]
     M --> N[Preencher dados da Falha]
     N --> O[Salvar Falha]
-    L -- Não --> P{Geracao de Relatorio?}
-    P -- Sim --> Q[Selecionar tipo de Relatorio]
-    Q --> R[Gerar Relatorio]
-    P -- Não --> S{Verificacao de Disponibilidade?}
-    S -- Sim --> T[Verificar disponibilidade dos Tecnicos]
+    L -- Não --> P{Geração de Relatório?}
+    P -- Sim --> Q[Selecionar tipo de Relatório]
+    Q --> R[Gerar Relatório]
+    P -- Não --> S{Verificação de Disponibilidade?}
+    S -- Sim --> T[Verificar disponibilidade dos Técnicos]
     A --> U[Encerrar]
+
