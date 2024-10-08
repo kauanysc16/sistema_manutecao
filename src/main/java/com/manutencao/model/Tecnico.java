@@ -18,6 +18,14 @@ public class Tecnico {
         this.disponivel = disponivel;
     }
 
+    // Novo construtor que aceita apenas id, nome e especialidade
+    public Tecnico(int id, String nome, String especialidade) {
+        this.id = id;
+        this.nome = nome;
+        this.especialidade = especialidade;
+        this.disponivel = true; // Valor padrão
+    }
+
     // Getters e Setters
     public int getId() {
         return id;

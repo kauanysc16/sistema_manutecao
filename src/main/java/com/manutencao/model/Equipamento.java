@@ -1,17 +1,28 @@
 package com.manutencao.model;
 
-import java.time.LocalDate; // Importa a classe LocalDate para trabalhar com datas
+import java.time.LocalDate;
 
 public class Equipamento {
-    private int id; // ID do equipamento
-    private String aparelho; // Nome do aparelho
-    private String modelo; // Modelo do equipamento
-    private String local; // Local onde o equipamento está
-    private LocalDate dataAquisicao; // Data de aquisição do equipamento
-    private String especificacoesTecnicas; // Especificações técnicas do equipamento
+    private int id;
+    private String aparelho;
+    private String modelo;
+    private String local;
+    private String especificacoesTecnicas;
+    private LocalDate dataAquisicao;
 
-    // Construtor
+    // Construtor vazio
     public Equipamento() {
+    }
+
+    // Construtor com todos os campos
+    public Equipamento(int id, String aparelho, String modelo, String local, String especificacoesTecnicas,
+            LocalDate dataAquisicao) {
+        this.id = id;
+        this.aparelho = aparelho;
+        this.modelo = modelo;
+        this.local = local;
+        this.especificacoesTecnicas = especificacoesTecnicas;
+        this.dataAquisicao = dataAquisicao;
     }
 
     // Getters e Setters
@@ -47,19 +58,19 @@ public class Equipamento {
         this.local = local;
     }
 
-    public LocalDate getDataAquisicao() {
-        return dataAquisicao;
-    }
-
-    public void setDataAquisicao(LocalDate dataAquisicao) {
-        this.dataAquisicao = dataAquisicao;
-    }
-
     public String getEspecificacoesTecnicas() {
         return especificacoesTecnicas;
     }
 
     public void setEspecificacoesTecnicas(String especificacoesTecnicas) {
         this.especificacoesTecnicas = especificacoesTecnicas;
+    }
+
+    public LocalDate getDataAquisicao() {
+        return dataAquisicao;
+    }
+
+    public void setDataAquisicao(LocalDate dataAquisicao) {
+        this.dataAquisicao = dataAquisicao;
     }
 }

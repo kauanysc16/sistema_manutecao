@@ -15,9 +15,11 @@ public class TecnicoDAO {
     public TecnicoDAO() {
         connection = new ConnectionFactory().getConnection(); // Inicializa a conexão com o banco de dados
     }
+
     public void salvar(Tecnico tecnico) {
         String sql = "INSERT INTO tecnico (nome, especialidade, disponibilidade) VALUES (?, ?, ?)";
-        try (Connection conn = new ConnectionFactory().getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, tecnico.getNome());
             stmt.setString(2, tecnico.getEspecialidade());
             stmt.setBoolean(3, tecnico.isDisponivel());
@@ -29,7 +31,8 @@ public class TecnicoDAO {
 
     public void atualizar(Tecnico tecnico) {
         String sql = "UPDATE tecnico SET nome = ?, especialidade = ?, disponibilidade = ? WHERE id = ?";
-        try (Connection conn = new ConnectionFactory().getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setString(1, tecnico.getNome());
             stmt.setString(2, tecnico.getEspecialidade());
             stmt.setBoolean(3, tecnico.isDisponivel());
@@ -42,7 +45,8 @@ public class TecnicoDAO {
 
     public void deletar(int id) {
         String sql = "DELETE FROM tecnico WHERE id = ?";
-        try (Connection conn = new ConnectionFactory().getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -52,7 +56,8 @@ public class TecnicoDAO {
 
     public Tecnico buscarPorId(int id) {
         String sql = "SELECT * FROM tecnico WHERE id = ?";
-        try (Connection conn = new ConnectionFactory().getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -72,7 +77,8 @@ public class TecnicoDAO {
     public List<Tecnico> listarTodos() {
         String sql = "SELECT * FROM tecnico";
         List<Tecnico> tecnicos = new ArrayList<>();
-        try (Connection conn = new ConnectionFactory().getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 Tecnico tecnico = new Tecnico();
@@ -91,7 +97,8 @@ public class TecnicoDAO {
     public List<Tecnico> listarPorDisponibilidade(boolean disponibilidade) {
         String sql = "SELECT * FROM tecnico WHERE disponibilidade = ?";
         List<Tecnico> tecnicos = new ArrayList<>();
-        try (Connection conn = new ConnectionFactory().getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setBoolean(1, disponibilidade);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -107,12 +114,14 @@ public class TecnicoDAO {
         }
         return tecnicos;
     }
+
     public List<Tecnico> verificarDisponibilidade() {
         List<Tecnico> tecnicosDisponiveis = new ArrayList<>(); // Lista para armazenar técnicos disponíveis
-        String sql = "SELECT * FROM tecnico WHERE disponivel = true"; // Consulta SQL para selecionar técnicos disponíveis
+        String sql = "SELECT * FROM tecnico WHERE disponivel = true"; // Consulta SQL para selecionar técnicos
+                                                                      // disponíveis
 
         try (PreparedStatement statement = connection.prepareStatement(sql); // Prepara a consulta
-             ResultSet resultSet = statement.executeQuery()) { // Executa a consulta
+                ResultSet resultSet = statement.executeQuery()) { // Executa a consulta
 
             while (resultSet.next()) { // Enquanto houver resultados
                 Tecnico tecnico = new Tecnico(); // Cria um novo objeto Tecnico
@@ -130,7 +139,8 @@ public class TecnicoDAO {
 
     public List<Tecnico> buscarPorEspecialidade(String especialidade) {
         List<Tecnico> tecnicos = new ArrayList<>(); // Lista para armazenar técnicos encontrados
-        String sql = "SELECT * FROM tecnico WHERE especialidade = ?"; // Consulta SQL para selecionar técnicos pela especialidade
+        String sql = "SELECT * FROM tecnico WHERE especialidade = ?"; // Consulta SQL para selecionar técnicos pela
+                                                                      // especialidade
 
         try (PreparedStatement statement = connection.prepareStatement(sql)) { // Prepara a consulta
             statement.setString(1, especialidade); // Define o parâmetro da consulta

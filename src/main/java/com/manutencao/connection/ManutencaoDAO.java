@@ -13,13 +13,14 @@ import com.manutencao.model.Manutencao;
 
 public class ManutencaoDAO {
 
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Defina seu formato desejado
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Defina seu formato
+                                                                                           // desejado
 
     public void salvar(Manutencao manutencao) {
         String sql = "INSERT INTO manutencao (equipamentoId, tipo, descricao, dataManutencao, status, pecasSubstituidas, tempoInatividade) VALUES (?, ?, ?, ?, ?, ?, ?)";
-        try (Connection conn = new ConnectionFactory().getConnection(); 
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-             
+        try (Connection conn = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setInt(1, manutencao.getEquipamentoId());
             stmt.setString(2, manutencao.getTipo());
             stmt.setString(3, manutencao.getDescricao());
@@ -35,9 +36,9 @@ public class ManutencaoDAO {
 
     public void atualizar(Manutencao manutencao) {
         String sql = "UPDATE manutencao SET equipamentoId = ?, tipo = ?, descricao = ?, dataManutencao = ?, status = ?, pecasSubstituidas = ?, tempoInatividade = ? WHERE id = ?";
-        try (Connection conn = new ConnectionFactory().getConnection(); 
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-             
+        try (Connection conn = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setInt(1, manutencao.getEquipamentoId());
             stmt.setString(2, manutencao.getTipo());
             stmt.setString(3, manutencao.getDescricao());
@@ -54,9 +55,9 @@ public class ManutencaoDAO {
 
     public void deletar(int id) {
         String sql = "DELETE FROM manutencao WHERE id = ?";
-        try (Connection conn = new ConnectionFactory().getConnection(); 
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-             
+        try (Connection conn = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {
@@ -66,9 +67,9 @@ public class ManutencaoDAO {
 
     public Manutencao buscarPorId(int id) {
         String sql = "SELECT * FROM manutencao WHERE id = ?";
-        try (Connection conn = new ConnectionFactory().getConnection(); 
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-             
+        try (Connection conn = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
@@ -83,10 +84,10 @@ public class ManutencaoDAO {
     public List<Manutencao> listarTodos() {
         String sql = "SELECT * FROM manutencao";
         List<Manutencao> manutencoes = new ArrayList<>();
-        try (Connection conn = new ConnectionFactory().getConnection(); 
-             PreparedStatement stmt = conn.prepareStatement(sql); 
-             ResultSet rs = stmt.executeQuery()) {
-             
+        try (Connection conn = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery()) {
+
             while (rs.next()) {
                 manutencoes.add(mapResultSetToManutencao(rs));
             }
@@ -99,9 +100,9 @@ public class ManutencaoDAO {
     public List<Manutencao> listarPorEquipamento(int equipamentoId) {
         String sql = "SELECT * FROM manutencao WHERE equipamentoId = ?";
         List<Manutencao> manutencoes = new ArrayList<>();
-        try (Connection conn = new ConnectionFactory().getConnection(); 
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-             
+        try (Connection conn = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setInt(1, equipamentoId);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -116,9 +117,9 @@ public class ManutencaoDAO {
     public List<Manutencao> listarPorStatus(String status) {
         String sql = "SELECT * FROM manutencao WHERE status = ?";
         List<Manutencao> manutencoes = new ArrayList<>();
-        try (Connection conn = new ConnectionFactory().getConnection(); 
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-             
+        try (Connection conn = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
             stmt.setString(1, status);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
@@ -132,10 +133,10 @@ public class ManutencaoDAO {
 
     public double calcularMTTR() {
         String sql = "SELECT AVG(tempoInatividade) AS mttr FROM manutencao WHERE tipo = 'Corretiva'";
-        try (Connection conn = new ConnectionFactory().getConnection(); 
-             PreparedStatement stmt = conn.prepareStatement(sql); 
-             ResultSet rs = stmt.executeQuery()) {
-             
+        try (Connection conn = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery()) {
+
             if (rs.next()) {
                 return rs.getDouble("mttr");
             }
@@ -147,10 +148,10 @@ public class ManutencaoDAO {
 
     public double calcularMTBF() {
         String sql = "SELECT (SUM(tempoAtivo) / COUNT(*)) AS mtbf FROM equipamento";
-        try (Connection conn = new ConnectionFactory().getConnection(); 
-             PreparedStatement stmt = conn.prepareStatement(sql); 
-             ResultSet rs = stmt.executeQuery()) {
-             
+        try (Connection conn = new ConnectionFactory().getConnection();
+                PreparedStatement stmt = conn.prepareStatement(sql);
+                ResultSet rs = stmt.executeQuery()) {
+
             if (rs.next()) {
                 return rs.getDouble("mtbf");
             }
@@ -167,7 +168,7 @@ public class ManutencaoDAO {
         manutencao.setTipo(rs.getString("tipo"));
         manutencao.setDescricao(rs.getString("descricao"));
         // Converter a data do formato String para LocalDate
-        manutencao.setDataManutencao(LocalDate.parse(rs.getString("dataManutencao"), formatter)); 
+        manutencao.setDataManutencao(LocalDate.parse(rs.getString("dataManutencao"), formatter));
         manutencao.setStatus(rs.getString("status"));
         manutencao.setPecasSubstituidas(rs.getString("pecasSubstituidas"));
         manutencao.setTempoInatividade(rs.getInt("tempoInatividade"));

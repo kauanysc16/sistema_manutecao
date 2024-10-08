@@ -1,105 +1,151 @@
 # Sistema de Manutenção Preventiva e Corretiva
 
-## Diagrama de Classes
+## Descrição do Projeto
 
-```mermaid
-classDiagram
-    class Tecnico {
-        +int id
-        +String nome
-        +String especialidade
-        +salvarTecnico()
-    }
+Este projeto é um sistema de gerenciamento de manutenção preventiva e corretiva para máquinas e equipamentos industriais. O sistema permite controlar manutenções preventivas, registrar falhas, gerenciar a alocação de técnicos e gerar relatórios detalhados sobre o histórico de manutenção e desempenho dos equipamentos.
 
-    class Equipamento {
-        +int id
-        +String aparelho
-        +String modelo
-        +String local
-        +salvarEquipamento()
-    }
+## Tecnologias Utilizadas
 
-    class Manutencao {
-        +int id
-        +int idTecnico
-        +int idEquipamento
-        +String data
-        +String descricao
-        +String status
-        +salvarManutencao()
-        +marcarComoConcluida()
-        +marcarComoPendente()
-    }
+- Java
+- PostgreSQL, MongoDB, ou Json-Server para persistência de dados
+- Swing ou JavaFX para interfaces gráficas
+- JUnit para testes unitários
 
-    Tecnico "1" -- "*" Manutencao : realiza
-    Equipamento "1" -- "*" Manutencao : é mantido
+## Funcionalidades
 
-## Diagrama de Fluxos
+- Cadastro de técnicos, equipamentos e manutenções
+- Agendamento de manutenções preventivas e corretivas
+- Registro de falhas e peças substituídas
+- Gerenciamento da alocação de técnicos
+- Geração de relatórios de manutenção
+- Verificação de disponibilidade de técnicos
 
-flowchart TD
-    A[Início] --> B[Tela Inicial]
-    B --> C{Selecionar Módulo}
-    C -->|Cadastro de Equipamento| D[TelaCadastroEquipamento]
-    C -->|Cadastro de Técnico| E[TelaCadastroTecnico]
-    C -->|Cadastro de Manutenção| F[TelaCadastroManutencao]
-    C -->|Lista de Manutenções| G[TelaListaManutencao]
+## Diagramas
 
-    D --> H[Preencher Dados do Equipamento]
-    H --> I[Salvar Equipamento]
-    I --> B
+#### Diagrama de Classes
 
-    E --> J[Preencher Dados do Técnico]
-    J --> K[Salvar Técnico]
-    K --> B
+```plantuml
+@startuml
+class Tecnico {
+  -int id
+  -String nome
+  -String especialidade
+  -boolean disponivel
+  +getId()
+  +setId(int)
+  +getNome()
+  +setNome(String)
+  +getEspecialidade()
+  +setEspecialidade(String)
+  +isDisponivel()
+  +setDisponivel(boolean)
+}
 
-    F --> L[Preencher Dados da Manutenção]
-    L --> M[Salvar Manutenção]
-    M --> B
+class Equipamento {
+  -int id
+  -String aparelho
+  -String modelo
+  -String local
+  +getId()
+  +setId(int)
+  +getAparelho()
+  +setAparelho(String)
+  +getModelo()
+  +setModelo(String)
+  +getLocal()
+  +setLocal(String)
+}
 
-    G --> N[Listar Manutenções]
-    N --> O{Selecionar Manutenção}
-    O -->|Concluída| P[Marcar como Concluída]
-    O -->|Pendente| Q[Marcar como Pendente]
-    P --> G
-    Q --> G
+class Manutencao {
+  -int id
+  -int idEquipamento
+  -int idTecnico
+  -String tipo
+  -String descricao
+  -LocalDate data
+  -String status
+  -String pecasSubstituidas
+  -int tempoInatividade
+  +getId()
+  +setId(int)
+  +getIdEquipamento()
+  +setIdEquipamento(int)
+  +getIdTecnico()
+  +setIdTecnico(int)
+  +getTipo()
+  +setTipo(String)
+  +getDescricao()
+  +setDescricao(String)
+  +getData()
+  +setData(LocalDate)
+  +getStatus()
+  +setStatus(String)
+  +getPecasSubstituidas()
+  +setPecasSubstituidas(String)
+  +getTempoInatividade()
+  +setTempoInatividade(int)
+}
 
-## Diagrama de Uso
+Tecnico "1" *-- "0..*" Manutencao
+Equipamento "1" *-- "0..*" Manutencao
+@enduml
 
-flowchart TD
-    A[Início] --> B[Tela Inicial]
-    
-    B --> C{Selecionar Módulo}
-    
-    C -->|Cadastro de Equipamento| D[Tela Cadastro Equipamento]
-    D --> E[Preencher Dados do Equipamento]
-    E --> F[Salvar Equipamento]
-    F --> G[Confirmação de Cadastro]
-    G --> B
-    
-    C -->|Cadastro de Técnico| H[Tela Cadastro Técnico]
-    H --> I[Preencher Dados do Técnico]
-    I --> J[Salvar Técnico]
-    J --> K[Confirmação de Cadastro]
-    K --> B
-    
-    C -->|Cadastro de Manutenção| L[Tela Cadastro Manutenção]
-    L --> M[Preencher Dados da Manutenção]
-    M --> N[Salvar Manutenção]
-    N --> O[Confirmação de Cadastro]
-    O --> B
-    
-    C -->|Lista de Manutenções| P[Tela Lista Manutenções]
-    P --> Q[Listar Manutenções]
-    Q --> R{Selecionar Manutenção}
-    
-    R -->|Marcar como Concluída| S[Marcar como Concluída]
-    S --> T[Atualizar Status]
-    T --> U[Confirmação de Atualização]
-    U --> P
-    
-    R -->|Marcar como Pendente| V[Marcar como Pendente]
-    V --> W[Atualizar Status]
-    W --> X[Confirmação de Atualização]
-    X --> P
-    
-    R -->|Voltar| P
+#### Diagrama de Uso
+
+@startuml
+actor Usuario
+actor Administrador
+
+Usuario --> (Cadastrar Tecnico)
+Usuario --> (Cadastrar Equipamento)
+Usuario --> (Agendar Manutencao)
+Usuario --> (Registrar Falha)
+Usuario --> (Gerar Relatorio)
+Usuario --> (Verificar Disponibilidade)
+
+Administrador --> (Cadastrar Tecnico)
+Administrador --> (Cadastrar Equipamento)
+Administrador --> (Agendar Manutencao)
+Administrador --> (Registrar Falha)
+Administrador --> (Gerar Relatorio)
+Administrador --> (Verificar Disponibilidade)
+@enduml
+
+#### Diagrama de Fluxos
+
+@startuml
+start
+:Inicio;
+if (Cadastro de Tecnico?) then (sim)
+  :Preencher dados do Tecnico;
+  :Salvar Tecnico;
+else (não)
+  if (Cadastro de Equipamento?) then (sim)
+    :Preencher dados do Equipamento;
+    :Salvar Equipamento;
+  else (não)
+    if (Agendamento de Manutencao?) then (sim)
+      :Selecionar Equipamento e Tecnico;
+      :Preencher dados da Manutencao;
+      :Salvar Manutencao;
+    else (não)
+      if (Registro de Falha?) then (sim)
+        :Selecionar Manutencao;
+        :Preencher dados da Falha;
+        :Salvar Falha;
+      else (não)
+        if (Geracao de Relatorio?) then (sim)
+          :Selecionar tipo de Relatorio;
+          :Gerar Relatorio;
+        else (não)
+          if (Verificacao de Disponibilidade?) then (sim)
+            :Verificar disponibilidade dos Tecnicos;
+          endif
+        endif
+      endif
+    endif
+  endif
+endif
+:Encerrar;
+stop
+@enduml

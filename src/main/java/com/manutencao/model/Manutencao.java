@@ -3,16 +3,34 @@ package com.manutencao.model;
 import java.time.LocalDate;
 
 public class Manutencao {
-    private int id; // Identificador da manutenção
-    private int equipamentoId; // ID do equipamento relacionado
-    private String tipo; // Tipo de manutenção (ex: Corretiva, Preventiva)
+    private int id; // ID da manutenção
+    private int idEquipamento; // ID do equipamento
+    private int idTecnico;
+    private String tipo; // Tipo da manutenção
     private String descricao; // Descrição da manutenção
-    private LocalDate dataManutencao; // Data da manutenção
-    private String status; // Status da manutenção (ex: Concluída, Pendente)
-    private String pecasSubstituidas; // Peças que foram substituídas
-    private int tempoInatividade; // Tempo de inatividade em horas
+    private LocalDate data; // Data da manutenção
+    private String status; // Status da manutenção
+    private String pecasSubstituidas; // Peças substituídas
+    private int tempoInatividade; // Tempo de inatividade
 
-    // Getters e Setters
+    // Construtor sem argumentos
+    public Manutencao() {
+    }
+
+    // Construtor com todos os parâmetros
+    public Manutencao(int id, int idTecnico, int idEquipamento, String tipo, String descricao, LocalDate data,
+            String status, String pecasSubstituidas, int tempoInatividade) {
+        this.id = id;
+        this.idTecnico = idTecnico;
+        this.idEquipamento = idEquipamento;
+        this.tipo = tipo;
+        this.descricao = descricao;
+        this.data = data;
+        this.status = status;
+        this.pecasSubstituidas = pecasSubstituidas;
+        this.tempoInatividade = tempoInatividade;
+    }
+
     public int getId() {
         return id;
     }
@@ -21,12 +39,12 @@ public class Manutencao {
         this.id = id;
     }
 
-    public int getEquipamentoId() {
-        return equipamentoId;
+    public int getEquipamentoId() { // Renomeado
+        return idEquipamento;
     }
 
-    public void setEquipamentoId(int equipamentoId) {
-        this.equipamentoId = equipamentoId;
+    public void setEquipamentoId(int idEquipamento) { // Renomeado
+        this.idEquipamento = idEquipamento;
     }
 
     public String getTipo() {
@@ -45,12 +63,12 @@ public class Manutencao {
         this.descricao = descricao;
     }
 
-    public LocalDate getDataManutencao() {
-        return dataManutencao;
+    public LocalDate getDataManutencao() { // Renomeado
+        return data;
     }
 
-    public void setDataManutencao(LocalDate dataManutencao) {
-        this.dataManutencao = dataManutencao;
+    public void setDataManutencao(LocalDate data) { // Renomeado
+        this.data = data;
     }
 
     public String getStatus() {
@@ -75,5 +93,29 @@ public class Manutencao {
 
     public void setTempoInatividade(int tempoInatividade) {
         this.tempoInatividade = tempoInatividade;
+    }
+
+    public int getIdEquipamento() {
+        return idEquipamento;
+    }
+
+    public void setIdEquipamento(int idEquipamento) {
+        this.idEquipamento = idEquipamento;
+    }
+
+    public int getIdTecnico() {
+        return idTecnico;
+    }
+
+    public void setIdTecnico(int idTecnico) {
+        this.idTecnico = idTecnico;
+    }
+
+    public LocalDate getData() {
+        return data;
+    }
+
+    public void setData(LocalDate data) {
+        this.data = data;
     }
 }

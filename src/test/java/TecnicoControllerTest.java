@@ -1,80 +1,114 @@
-import java.util.Arrays; // Importa a classe Arrays da biblioteca java.util para manipulação de arrays
-import java.util.List; // Importa a classe List da biblioteca java.util para manipulação de listas
+import java.util.Arrays;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals; // Importa o método assertEquals da biblioteca JUnit para asserções em testes
-import org.junit.jupiter.api.BeforeEach; // Importa a anotação BeforeEach da biblioteca JUnit para configuração antes de cada teste
-import org.junit.jupiter.api.Test; // Importa a anotação Test da biblioteca JUnit para definição de métodos de teste
-import static org.mockito.Mockito.mock; // Importa o método mock da biblioteca Mockito para criação de mocks
-import static org.mockito.Mockito.verify; // Importa o método verify da biblioteca Mockito para verificação de interações
-import static org.mockito.Mockito.when; // Importa o método when da biblioteca Mockito para definição de comportamento de mocks
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
-import com.manutencao.connection.TecnicoDAO; // Importa a classe TecnicoDAO para operações de banco de dados
-import com.manutencao.controller.TecnicoController; // Importa a classe TecnicoController para controle de lógica de técnico
-import com.manutencao.model.Tecnico; // Importa a classe Tecnico do modelo
+import com.manutencao.connection.TecnicoDAO;
+import com.manutencao.controller.TecnicoController;
+import com.manutencao.model.Tecnico;
 
 public class TecnicoControllerTest {
-    private TecnicoDAO tecnicoDAOMock; // Mock do DAO
-    private TecnicoController tecnicoController; // Instância do controlador
+    private TecnicoDAO tecnicoDAOMock;
+    private TecnicoController tecnicoController;
 
     @BeforeEach
     public void setUp() {
-        tecnicoDAOMock = mock(TecnicoDAO.class); // Criação do mock
+        tecnicoDAOMock = mock(TecnicoDAO.class);
         tecnicoController = new TecnicoController() {
             public TecnicoDAO getTecnicoDAO() {
-                return tecnicoDAOMock; // Substituição do DAO no controlador
+                return tecnicoDAOMock;
             }
         };
     }
 
     @Test
     public void testSalvarTecnico() {
-        Tecnico tecnico = new Tecnico(1, "Tecnico 1", "Especialidade 1");
-
-        tecnicoController.salvarTecnico(tecnico); // Chamada ao método a ser testado
-
-        verify(tecnicoDAOMock).salvar(tecnico); // Verifica se o método salvar foi chamado no DAO
+        Tecnico tecnico = new Tecnico(1, "João", "Eletricista", true);
+        
+        tecnicoController.salvarTecnico(tecnico);
+        
+        verify(tecnicoDAOMock).salvar(tecnico);
     }
 
     @Test
     public void testAtualizarTecnico() {
-        Tecnico tecnico = new Tecnico(1, "Tecnico 1", "Especialidade 1");
+        Tecnico tecnico = new Tecnico(1, "João", "Eletricista", true);
 
-        tecnicoController.atualizarTecnico(tecnico); // Chamada ao método a ser testado
-
-        verify(tecnicoDAOMock).atualizar(tecnico); // Verifica se o método atualizar foi chamado no DAO
+        tecnicoController.atualizarTecnico(tecnico);
+        
+        verify(tecnicoDAOMock).atualizar(tecnico);
     }
 
     @Test
     public void testDeletarTecnico() {
         int id = 1;
-
-        tecnicoController.deletarTecnico(id); // Chamada ao método a ser testado
-
-        verify(tecnicoDAOMock).deletar(id); // Verifica se o método deletar foi chamado no DAO
+        
+        tecnicoController.deletarTecnico(id);
+        
+        verify(tecnicoDAOMock).deletar(id);
     }
 
     @Test
     public void testBuscarTecnicoPorId() {
         int id = 1;
-        Tecnico tecnico = new Tecnico(id, "Tecnico 1", "Especialidade 1");
-        when(tecnicoDAOMock.buscarPorId(id)).thenReturn(tecnico); // Configuração do comportamento do mock
+        Tecnico tecnico = new Tecnico(1, "João", "Eletricista", true);
 
-        Tecnico resultado = tecnicoController.buscarTecnicoPorId(id); // Chamada ao método a ser testado
+        when(tecnicoDAOMock.buscarPorId(id)).thenReturn(tecnico);
 
-        assertEquals(tecnico, resultado); // Verifica se o resultado é o esperado
-        verify(tecnicoDAOMock).buscarPorId(id); // Verifica se o método buscarPorId foi chamado no DAO
+        Tecnico resultado = tecnicoController.buscarTecnicoPorId(id);
+        
+        assertEquals(tecnico, resultado);
+        verify(tecnicoDAOMock).buscarPorId(id);
     }
 
     @Test
     public void testListarTodosTecnicos() {
-        Tecnico tecnico1 = new Tecnico(1, "Tecnico 1", "Especialidade 1");
-        Tecnico tecnico2 = new Tecnico(2, "Tecnico 2", "Especialidade 2");
+        Tecnico tecnico1 = new Tecnico(1, "João", "Eletricista", true);
+        Tecnico tecnico2 = new Tecnico(2, "Maria", "Mecânica", false);
+
         List<Tecnico> tecnicos = Arrays.asList(tecnico1, tecnico2);
-        when(tecnicoDAOMock.listarTodos()).thenReturn(tecnicos); // Configuração do comportamento do mock
 
-        List<Tecnico> resultado = tecnicoController.listarTodosTecnicos(); // Chamada ao método a ser testado
+        when(tecnicoDAOMock.listarTodos()).thenReturn(tecnicos);
 
-        assertEquals(tecnicos, resultado); // Verifica se o resultado é o esperado
-        verify(tecnicoDAOMock).listarTodos(); // Verifica se o método listarTodos foi chamado no DAO
+        List<Tecnico> resultado = tecnicoController.listarTodosTecnicos();
+        
+        assertEquals(tecnicos, resultado);
+        verify(tecnicoDAOMock).listarTodos();
+    }
+
+    @Test
+    public void testBuscarTecnicosPorEspecialidade() {
+        String especialidade = "Eletricista";
+        Tecnico tecnico1 = new Tecnico(1, "João", especialidade, true);
+        Tecnico tecnico2 = new Tecnico(2, "Carlos", especialidade, true);
+
+        List<Tecnico> tecnicos = Arrays.asList(tecnico1, tecnico2);
+
+        when(tecnicoDAOMock.buscarPorEspecialidade(especialidade)).thenReturn(tecnicos);
+
+        List<Tecnico> resultado = tecnicoController.buscarTecnicosPorEspecialidade(especialidade);
+        
+        assertEquals(tecnicos, resultado);
+        verify(tecnicoDAOMock).buscarPorEspecialidade(especialidade);
+    }
+
+    @Test
+    public void testVerificarDisponibilidade() {
+        Tecnico tecnico1 = new Tecnico(1, "João", "Eletricista", true);
+        Tecnico tecnico2 = new Tecnico(2, "Maria", "Mecânica", true);
+
+        List<Tecnico> tecnicos = Arrays.asList(tecnico1, tecnico2);
+
+        when(tecnicoDAOMock.verificarDisponibilidade()).thenReturn(tecnicos);
+
+        List<Tecnico> resultado = tecnicoController.verificarDisponibilidade();
+        
+        assertEquals(tecnicos, resultado);
+        verify(tecnicoDAOMock).verificarDisponibilidade();
     }
 }

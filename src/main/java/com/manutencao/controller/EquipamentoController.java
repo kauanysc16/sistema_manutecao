@@ -9,31 +9,63 @@ public class EquipamentoController {
     private EquipamentoDAO equipamentoDAO;
 
     public EquipamentoController() {
-        equipamentoDAO = new EquipamentoDAO();
+        this.equipamentoDAO = new EquipamentoDAO();
     }
 
-    public void salvarEquipamento(Equipamento equipamento) {
-        equipamentoDAO.salvar(equipamento);
+    public boolean salvarEquipamento(Equipamento equipamento) {
+        try {
+            equipamentoDAO.salvar(equipamento);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
-    public void atualizarEquipamento(Equipamento equipamento) {
-        equipamentoDAO.atualizar(equipamento);
+    public boolean atualizarEquipamento(Equipamento equipamento) {
+        try {
+            equipamentoDAO.atualizar(equipamento);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
-    public void deletarEquipamento(int id) {
-        equipamentoDAO.deletar(id);
+    public boolean deletarEquipamento(int id) {
+        try {
+            equipamentoDAO.deletar(id);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     public Equipamento buscarEquipamentoPorId(int id) {
-        return equipamentoDAO.buscarPorId(id);
+        try {
+            return equipamentoDAO.buscarPorId(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     public List<Equipamento> listarTodosEquipamentos() {
-        return equipamentoDAO.listarTodos();
+        try {
+            return equipamentoDAO.listarTodos();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
-    // Método adicional para buscar equipamento pelo local
     public List<Equipamento> buscarEquipamentoPorLocal(String local) {
-        return equipamentoDAO.buscarPorLocal(local);
+        try {
+            return equipamentoDAO.buscarPorLocal(local);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }
