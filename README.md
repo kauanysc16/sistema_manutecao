@@ -24,7 +24,7 @@ Este projeto é um sistema de gerenciamento de manutenção preventiva e correti
 
 #### Diagrama de Classes
 
-classDiagram
+flowchart TD
     class Tecnico {
         +int id
         +string nome
