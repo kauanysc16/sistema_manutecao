@@ -24,7 +24,6 @@ Este projeto é um sistema de gerenciamento de manutenção preventiva e correti
 
 #### Diagrama de Classes
 
-```plantuml
 @startuml
 class Tecnico {
   -int id
@@ -90,6 +89,7 @@ Tecnico "1" *-- "0..*" Manutencao
 Equipamento "1" *-- "0..*" Manutencao
 @enduml
 
+
 #### Diagrama de Uso
 
 @startuml
@@ -110,6 +110,7 @@ Administrador --> (Registrar Falha)
 Administrador --> (Gerar Relatorio)
 Administrador --> (Verificar Disponibilidade)
 @enduml
+
 
 #### Diagrama de Fluxos
 
