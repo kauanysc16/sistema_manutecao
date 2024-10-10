@@ -13,11 +13,11 @@ import com.manutencao.model.Manutencao; // Importa a classe Manutencao que repre
 public class ManutencaoDAO {
 
     public void salvar(Manutencao manutencao) throws SQLException {
-        String sql = "INSERT INTO manutencao (idEquipamento(), tipo, descricao, dataManutencao, status, pecasSubstituidas, tempoInatividade) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO manutencao (idEquipamento, tipo, descricao, dataManutencao, status, pecasSubstituidas, tempoInatividade) VALUES (?, ?, ?, ?, ?, ?, ?)";
         
         try (Connection conn = new ConnectionFactory().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, manutencao.getIdEquipamento()());
+            stmt.setInt(1, manutencao.getIdEquipamento());
             stmt.setString(2, manutencao.getTipo());
             stmt.setString(3, manutencao.getDescricao());
             stmt.setDate(4, java.sql.Date.valueOf(manutencao.getDataManutencao())); // Converte LocalDate para java.sql.Date
@@ -29,11 +29,11 @@ public class ManutencaoDAO {
     }
 
     public void atualizar(Manutencao manutencao) throws SQLException {
-        String sql = "UPDATE manutencao SET igetIdEquipamento() = ?, tipo = ?, descricao = ?, dataManutencao = ?, status = ?, pecasSubstituidas = ?, tempoInatividade = ? WHERE id = ?";
+        String sql = "UPDATE manutencao SET idEquipamento = ?, tipo = ?, descricao = ?, dataManutencao = ?, status = ?, pecasSubstituidas = ?, tempoInatividade = ? WHERE id = ?";
         
         try (Connection conn = new ConnectionFactory().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, manutencao.getIdEquipamento()());
+            stmt.setInt(1, manutencao.getIdEquipamento());
             stmt.setString(2, manutencao.getTipo());
             stmt.setString(3, manutencao.getDescricao());
             stmt.setDate(4, java.sql.Date.valueOf(manutencao.getDataManutencao())); // Converte LocalDate para java.sql.Date
@@ -80,12 +80,12 @@ public class ManutencaoDAO {
         return manutencoes;
     }
 
-    public List<Manutencao> listarPorEquipamento(int idEquipamento()) throws SQLException {
+    public List<Manutencao> listarPorEquipamento(int idEquipamento) throws SQLException {
         List<Manutencao> manutencoes = new ArrayList<>();
-        String sql = "SELECT * FROM manutencao WHERE igetIdEquipamento() = ?";
+        String sql = "SELECT * FROM manutencao WHERE idEquipamento = ?";
         try (Connection conn = new ConnectionFactory().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setInt(1, igetIdEquipamento());
+            stmt.setInt(1, idEquipamento);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 manutencoes.add(mapResultSetToManutencao(rs));
@@ -98,7 +98,7 @@ public class ManutencaoDAO {
     private Manutencao mapResultSetToManutencao(ResultSet rs) throws SQLException {
         Manutencao manutencao = new Manutencao(); // Cria um novo objeto Manutencao
         manutencao.setId(rs.getInt("id")); // Define o ID da manutenção
-        manutencao.setigetIdEquipamento()(rs.getInt("igetIdEquipamento()")); // Define o ID do equipamento
+        manutencao.setIdEquipamento(rs.getInt("idEquipamento")); // Define o ID do equipamento
         manutencao.setTipo(rs.getString("tipo")); // Define o tipo de manutenção
         manutencao.setDescricao(rs.getString("descricao")); // Define a descrição da manutenção
         
